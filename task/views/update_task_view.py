@@ -31,7 +31,7 @@ class UpdateTaskView(APIView):
         if not serializer.is_valid():
             response_date = {
                 'success': False,
-                'status': ResponseCode.INVALID_REQUEST.value,
+                'response_code': ResponseCode.INVALID_REQUEST.value,
             }
             return Response(data=response_date, status=status.HTTP_400_BAD_REQUEST)
 
@@ -39,7 +39,7 @@ class UpdateTaskView(APIView):
             self.service.update_task(task_id=task_id, task_data=serializer.validated_data)
             response_data = {
                 'success': True,
-                'status': ResponseCode.SUCCESS.value,
+                'response_code': ResponseCode.SUCCESS.value,
             }
             return Response(data=response_data, status=status.HTTP_200_OK)
         except TaskNotFound:

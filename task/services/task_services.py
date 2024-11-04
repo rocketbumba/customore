@@ -10,6 +10,8 @@ from task.models import Task
 class TaskService:
     def __init__(self):
         pass
+
+
     @transaction.atomic
     def get_task(self, task_id: int) -> Task:
         return self.__get_task(task_id=task_id)
@@ -22,11 +24,11 @@ class TaskService:
             raise TaskNotFound()
 
     @transaction.atomic
-    def create_task(self, task_data):
+    def create_task(self, task_data: dict):
         self.__create_task(task_data)
 
     @staticmethod
-    def __create_task(task_data):
+    def __create_task(task_data: dict):
         try:
             Task.objects.create(
                 title=task_data['title'],
@@ -34,14 +36,16 @@ class TaskService:
                 due_date=task_data['due_date'],
                 status=task_data['status'],
             )
-        except Exception as e:
-            print(e)
+        except Exception as error:
+            raise UnhandledProcessTaskTransaction(error)
+
+
     @transaction.atomic
-    def update_task(self, task_id: int, task_data):
+    def update_task(self, task_id: int, task_data: dict):
         self.__update_task(task_id=task_id, task_data=task_data)
 
     @staticmethod
-    def __update_task(task_id: int, task_data):
+    def __update_task(task_id: int, task_data: dict):
         try:
             task_need_to_be_updated = Task.objects.get(pk=task_id)
             if task_data.get('title'):
@@ -64,11 +68,15 @@ class TaskService:
 
     @staticmethod
     def __get_list_task(status: TaskStatus) -> List[Task]:
-        try:
-            list_task = Task.objects.filter(status=status)
+        if status is not None:
+            try:
+                list_task = Task.objects.filter(status=status)
+                return list_task
+            except Exception as error:
+                raise UnhandledProcessTaskTransaction(error)
+        else:
+            list_task = Task.objects.filter()
             return list_task
-        except Exception as e:
-            raise UnhandledProcessTaskTransaction(e)
 
 
 

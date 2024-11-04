@@ -1,10 +1,9 @@
-from enum import Enum, auto
+from enum import StrEnum
 
 
-class TaskStatus(Enum):
-    COMPLETED = auto()
-    PENDING = auto()
+class TaskStatus(StrEnum):
+    COMPLETED = 'COMPLETED'
+    PENDING = 'PENDING'
 
-    @classmethod
-    def choices(cls):
-        return [(item.value, item.name) for item in cls]
+
+
