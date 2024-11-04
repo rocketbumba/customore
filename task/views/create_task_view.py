@@ -11,7 +11,7 @@ from task.services.task_services import TaskService
 class InputSerializer(serializers.Serializer):
     title = serializers.CharField(required=True)
     description = serializers.CharField()
-    due_date = serializers.DateField(format="%Y-%m-%d")
+    due_date = serializers.DateField(format="%Y-%m-%d", required=False)
     status = serializers.CharField(default=TaskStatus.PENDING.value)
 
 
