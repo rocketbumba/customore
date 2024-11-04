@@ -1,0 +1,19 @@
+version: '3.9'
+services:
+
+  db:
+    restart: always
+    image: postgres
+    container_name: customore #you can change this
+    environment:
+      - POSTGRES_USER=customore
+      - POSTGRES_PASSWORD=customore
+      - POSTGRES_DB=customore
+      - POSTGRES_PORT=5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
