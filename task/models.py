@@ -1,14 +1,17 @@
 from django.db import models
 
-from task.enums.task_status import TaskStatus
 
 
 # Create your models here.
 class Task(models.Model):
-    title = models.CharField(max_length=100)
+    class TaskStatus(models.TextChoices):
+        COMPLETED = 'COMPLETED'
+        PENDING = 'PENDING'
+
+    title = models.CharField(max_length=256)
     description = models.CharField(max_length=1000)
     due_date = models.DateField()
-    status = models.CharField(choices=TaskStatus.choices)
+    status = models.CharField(choices=TaskStatus)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
