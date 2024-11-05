@@ -10,7 +10,7 @@ from task.services.task_services import TaskService
 
 
 class InputSerializer(serializers.Serializer):
-    title = serializers.CharField(required=False, allow_blank=False)
+    title = serializers.CharField(required=False)
     description = serializers.CharField(required=False)
     due_date = serializers.DateField(required=False)
     status = serializers.ChoiceField(required=False, choices=TaskStatus.choices)
