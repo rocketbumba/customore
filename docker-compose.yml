@@ -6,9 +6,9 @@ services:
     image: postgres
     container_name: customore #you can change this
     environment:
-      - POSTGRES_USER=customore
-      - POSTGRES_PASSWORD=customore
-      - POSTGRES_DB=customore
+      - POSTGRES_USER=customore #you can change this
+      - POSTGRES_PASSWORD=customore #you can change this
+      - POSTGRES_DB=customore #you can change this
       - POSTGRES_PORT=5432
     ports:
       - "5432:5432"
