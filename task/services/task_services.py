@@ -47,7 +47,7 @@ class TaskService:
     @staticmethod
     def __update_task(task_id: int, task_data: dict) -> Task:
         try:
-            task_need_to_be_updated = Task.objects.get(pk=task_id)
+            task_need_to_be_updated = Task.objects.select_for_update().get(pk=task_id)
             if task_data.get('title'):
                 task_need_to_be_updated.title = task_data.get('title')
             if task_data.get('description'):

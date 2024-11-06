@@ -10,7 +10,7 @@ from task.models import Task
 from task.services.task_services import TaskService
 
 
-class OutPutSerializer(serializers.ModelSerializer):
+class OutputSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields  = ('id', 'title', 'description', 'due_date', 'status')
@@ -26,7 +26,7 @@ class GetTaskView(BaseAPIView):
             task = self.service.get_task(task_id=task_id)
             return self._build_response(
                 success=True,
-                data=OutPutSerializer(task).data,
+                data=OutputSerializer(task).data,
                 response_code=ResponseCode.SUCCESS,
                 status_code=status.HTTP_200_OK,
             )
