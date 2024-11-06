@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 import json
 
@@ -17,12 +18,19 @@ class TestUpdateTaskView(APITestCase):
             due_date="2024-11-2"
         )
 
+        self.user = User.objects.create_user(
+            email='a@gmail.com',
+            username='a@gmail.com',
+            password='aaaa'
+        )
+
     @patch(
         'task.views.update_task_view.TaskService'
     )
     def test_update_task_success(self, mock_class_task_service):
         mock_get_task_service = mock_class_task_service.return_value
         mock_get_task_service.update_task.return_value = self.task
+        self.client.force_authenticate(user=self.user)
         url = '/task/update-task/1'
         response = self.client.post(url, data={
             "title": "Test Task Update",
@@ -39,6 +47,7 @@ class TestUpdateTaskView(APITestCase):
     def test_update_task_not_found(self, mock_class_task_service):
         mock_get_task_service = mock_class_task_service.return_value
         mock_get_task_service.update_task.side_effect = TaskNotFound()
+        self.client.force_authenticate(user=self.user)
         url = '/task/update-task/1'
         response = self.client.post(url, data={
             "title": "Test Task Update",

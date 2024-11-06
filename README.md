@@ -62,6 +62,13 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
+Create User For Login
+```
+python manage.py createsuperuser
+
+```
+
+
 - Start Server
 ```
 python manage.py runserver
@@ -72,11 +79,13 @@ List of API:
 - get-task/{task_id}
 - create-task
 - get-list-task
-  - get-list-task/<limit_per_page>/<page>/<status_task>
+  - get-list-task/<limit_per_page>/<which_page>/<status_task>
   - get-list-task/<limit_per_page>/<page>
 - update-task/{task_id}
 
 Import Customore.postman_collection to your Postman
+
+If you need to call another API, you first need run API:Login to get the Token
 
 Input Data in request body to create-task or update-task
 

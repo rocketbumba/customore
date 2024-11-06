@@ -1,5 +1,6 @@
 from unittest.mock import patch
 
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 import json
 
@@ -15,12 +16,19 @@ class TestCreateTaskView(APITestCase):
             due_date="2024-11-2"
         )
 
+        self.user = User.objects.create_user(
+            email='a@gmail.com',
+            username='a@gmail.com',
+            password='aaaa'
+        )
+
     @patch(
         'task.views.create_task_view.TaskService'
     )
     def test_create_task_success(self, mock_class_task_service):
         mock_get_task_service = mock_class_task_service.return_value
         mock_get_task_service.create_task.return_value = self.task
+        self.client.force_authenticate(user=self.user)
         url = '/task/create-task'
         response = self.client.post(url, data={
             "title": "Test Task 1",
@@ -37,6 +45,7 @@ class TestCreateTaskView(APITestCase):
     def test_create_task_without_title(self,mock_class_task_service ):
         mock_get_task_service = mock_class_task_service.return_value
         mock_get_task_service.create_task.return_value = self.task
+        self.client.force_authenticate(user=self.user)
         url = '/task/create-task'
         response = self.client.post(url, data={
             "description": "Test Description",
@@ -52,6 +61,7 @@ class TestCreateTaskView(APITestCase):
     def test_create_task_with_title_blank(self, mock_class_task_service):
         mock_get_task_service = mock_class_task_service.return_value
         mock_get_task_service.create_task.return_value = self.task
+        self.client.force_authenticate(user=self.user)
         url = '/task/create-task'
         response = self.client.post(url, data={
             "title": "",

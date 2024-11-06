@@ -1,8 +1,12 @@
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
 class BaseAPIView(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     @staticmethod
     def _build_response(success: bool, response_code: str, status_code, data: dict | None = None) -> Response:
         response_data = {

@@ -1,5 +1,7 @@
 
 from rest_framework import serializers, status
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 
@@ -16,6 +18,7 @@ class OutputSerializer(serializers.ModelSerializer):
         fields  = ('id', 'title', 'description', 'due_date', 'status')
 
 class GetTaskView(BaseAPIView):
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.service = TaskService()

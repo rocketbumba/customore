@@ -10,7 +10,13 @@
 			"name": "Create Task",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"title\": \"test_123\",\n    \"description\": \"abcxyz\",\n    \"due_date\": \"2024-11-2\",\n    \"status\": \"PENDING\"\n}",
@@ -42,9 +48,15 @@
 			"name": "Get Task",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "http://127.0.0.1:8000/task/get-task/123",
+					"raw": "http://127.0.0.1:8000/task/get-task/1",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -56,7 +68,7 @@
 					"path": [
 						"task",
 						"get-task",
-						"123"
+						"1"
 					]
 				}
 			},
@@ -66,9 +78,15 @@
 			"name": "Get List Task",
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
 				"url": {
-					"raw": "http://127.0.0.1:8000/task/get-list-task/1/1",
+					"raw": "http://127.0.0.1:8000/task/get-list-task/1/4",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -81,7 +99,7 @@
 						"task",
 						"get-list-task",
 						"1",
-						"1"
+						"4"
 					]
 				}
 			},
@@ -91,10 +109,16 @@
 			"name": "Update Task",
 			"request": {
 				"method": "POST",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"title\": \"test\",\n    \"description\": \"aaa\",\n    // // \"due_date\":\"\",\n    \"status\": \"Ahh\"\n}",
+					"raw": "{\n    \"title\": \"\",\n    \"description\": \"Test Description\",\n    \"status\": \"eee\",\n    \"due_date\": \"2024-11-2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -119,6 +143,93 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Get Token from Response\", () => {",
+							"    const jsonData = pm.response.json();",
+							"",
+							"    pm.collectionVariables.set(\"token\", jsonData['token']);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"{{username}}\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/task/login",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"task",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "username",
+			"value": "hiep",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "hiep",
+			"type": "string"
 		}
 	]
 }
