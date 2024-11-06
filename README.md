@@ -69,10 +69,10 @@ python manage.py runserver
 
 ## Run API
 List of API:
-- get-task
+- get-task/{task_id}
 - create-task
 - get-list-task
-- update-task
+- update-task/{task_id}
 
 Import Customore.postman_collection to your Postman
 
