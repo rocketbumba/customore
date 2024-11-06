@@ -29,7 +29,7 @@ Structure my code:
   - /views: where to endpoint of api. Mission of this package: Receive and Response data to client
   - /services: where store logic handling database transaction and reponse to views
   - /exceptions: where store exceptions use for Task App
-  - /migrateons: use to store migrate file
+  - /migrations: use to store migrate file
   - /tests: use to store unit test of service and unit test of view
   - /enums: use to store enums use for Task App. For example: Response_code, Task Status
  
