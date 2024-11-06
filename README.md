@@ -72,6 +72,8 @@ List of API:
 - get-task/{task_id}
 - create-task
 - get-list-task
+  - get-list-task/<limit_per_page>/<page>/<status_task>
+  - get-list-task/<limit_per_page>/<page>
 - update-task/{task_id}
 
 Import Customore.postman_collection to your Postman
